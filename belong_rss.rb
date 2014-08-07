@@ -18,10 +18,14 @@ get '/feed' do
     maker.channel.title = "rss for belong.io"
     maker.channel.id = "belong rss"
 
-    doc.xpath("//li/a").each do |link|
+    doc.xpath("//li").each do |list_item|
+      link = list_item.xpath("./a").remove.first
+      summary = list_item.content.gsub(/^[\s]+/,'').gsub('"','')
+
       maker.items.new_item do |item|
         item.link = link['href']
         item.title = link.content
+        item.summary = summary
         item.updated = Time.now.to_s
       end
     end
