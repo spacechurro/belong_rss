@@ -18,9 +18,9 @@ get '/feed' do
     maker.channel.title = "rss for belong.io"
     maker.channel.id = "belong rss"
 
-    doc.xpath("//li").each do |list_item|
-      link = list_item.xpath("./a").remove.first
-      summary = list_item.content.gsub(/^[\s]+/,'').gsub('"','')
+    doc.css('div.item').each do |list_item|
+      link = list_item.xpath("./a").first.remove
+      summary = list_item.inner_html.gsub(/^[\s]+/,'').gsub('"','')
 
       maker.items.new_item do |item|
         item.link = link['href']
