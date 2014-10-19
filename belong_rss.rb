@@ -22,11 +22,13 @@ get '/feed' do
       link = list_item.xpath("./a").first.remove
       summary = list_item.inner_html.gsub(/^[\s]+/,'').gsub('"','')
 
-      maker.items.new_item do |item|
-        item.link = link['href']
-        item.title = link.content
-        item.summary = summary
-        item.updated = Time.now.to_s
+      unless link['href'] =~ /^\/\?when/
+        maker.items.new_item do |item|
+          item.link = link['href']
+          item.title = link.content
+          item.summary = summary
+          item.updated = Time.now.to_s
+        end
       end
     end
   end
