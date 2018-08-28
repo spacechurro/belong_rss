@@ -10,7 +10,7 @@ end
 
 get '/feed' do
   content_type "text/xml"
-  doc = Nokogiri::HTML(open("http://belong.io"))
+  doc = Nokogiri::HTML(open("https://belong.io"))
 
   rss = RSS::Maker.make("atom") do |maker|
     maker.channel.author = "belong rss - a makeshift rss feed for belong.io"
